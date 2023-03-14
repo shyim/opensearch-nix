@@ -1,4 +1,5 @@
 { lib
+, stdenv
 , stdenvNoCC
 , fetchurl
 , makeWrapper
@@ -8,15 +9,16 @@
 , coreutils
 , autoPatchelfHook
 , zlib
+, nixosTests
 }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "opensearch";
-  version = "2.5.0";
+  version = "2.6.0";
 
   src = fetchurl {
     url = "https://artifacts.opensearch.org/releases/bundle/opensearch/${version}/opensearch-${version}-linux-x64.tar.gz";
-    hash = "sha256-WPD5StVBb/hK+kP/1wkQQBKRQma/uaP+8ULeIFUBL1U=";
+    hash = "sha256-qJrgWF8JCR4jmnF239gaiRr4Y7Tin0TyYjzxd1Q4Wko";
   };
 
   nativeBuildInputs = [ makeWrapper ];
@@ -36,6 +38,8 @@ stdenvNoCC.mkDerivation rec {
     wrapProgram $out/bin/opensearch-plugin --set JAVA_HOME "${jre_headless}"
     runHook postInstall
   '';
+
+  passthru.tests = nixosTests.opensearch;
 
   meta = {
     description = "Open Source, Distributed, RESTful Search Engine";

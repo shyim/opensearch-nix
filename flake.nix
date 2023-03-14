@@ -19,7 +19,8 @@
         in
         {
           opensearch_2_5_0 = pkgs.callPackage ./packages/2.5.0 { };
-          opensearch = pkgs.callPackage ./packages/2.5.0 { };
+          opensearch_2_6_0 = pkgs.callPackage ./packages/2.6.0 { };
+          opensearch = pkgs.callPackage ./packages/2.6.0 { };
         }
       );
     };
